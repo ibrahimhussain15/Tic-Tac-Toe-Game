@@ -111,6 +111,11 @@ class TicTacToe extends JFrame implements MouseListener, ItemListener {
 				GameMechanics.getCoordinates(GameMechanics.returnCell(e.getX(), e.getY()));
 				GameMechanics.gameBoard[GameMechanics.returnCell(e.getX(), e.getY())] = "X";
 				GameMechanics.drawX(GameMechanics.X, GameMechanics.Y);
+				if(GameMechanics.checkForWinner().equalsIgnoreCase("X") || GameMechanics.checkForWinner().equalsIgnoreCase("O")) {
+					GameMechanics.declareWinner(GameMechanics.checkForWinner());
+					userTurn = false;
+					return;
+				}
 				userTurn = false;
 				try {
 					Thread.sleep(500);
