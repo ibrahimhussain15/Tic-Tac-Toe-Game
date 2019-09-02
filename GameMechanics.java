@@ -98,14 +98,13 @@ public class GameMechanics {
 		  
         g.setColor(Color.red); 
   
-        // get X and y position 
-//        int x, y; 
-//        x = e.getX(); 
-//        y = e.getY(); 
-  
-        // draw a Oval at the point  
-        // where mouse is moved 
-        g.fillOval(x, y, 50, 50); 
+        
+        g.fillOval(x, y, 50, 50);
+        
+        gameBoard[returnCell(X,Y)] = "O";
+        for(int i =0; i < gameBoard.length; i++)
+        System.out.print(gameBoard[i] + " ");
+        System.out.println();
 	
 	}
 	
@@ -119,7 +118,9 @@ public class GameMechanics {
         
         g.drawLine(x, y, x + 50, y + 50);
         g.drawLine(x + 50, y, x, y + 50);
-		
+        for(int i =0; i < gameBoard.length; i++)
+            System.out.print(gameBoard[i] + " ");
+		System.out.println();
 	}
 	
 	public static int chooseComputerTurn() {
@@ -129,6 +130,7 @@ public class GameMechanics {
 			int result = r.nextInt(9);
 			while(gameBoard[result].equalsIgnoreCase("X") || gameBoard[result].equalsIgnoreCase("O")  ) {
 			result =  r.nextInt(9);
+			continue;
 			}
 			return result;
 		}
@@ -138,6 +140,7 @@ public class GameMechanics {
 			int result = r.nextInt(9);
 			while(gameBoard[result].equalsIgnoreCase("X") || gameBoard[result].equalsIgnoreCase("O")  ) {
 			result =  r.nextInt(9);
+			continue;
 			}
 			return result;
 		}
@@ -147,6 +150,7 @@ public class GameMechanics {
 			int result = r.nextInt(9);
 			while(gameBoard[result].equalsIgnoreCase("X") || gameBoard[result].equalsIgnoreCase("O") ) {
 			result =  r.nextInt(9);
+			continue;
 			}
 			return result;
 		}
@@ -155,12 +159,13 @@ public class GameMechanics {
 	
 	public static void computerTurn() {
 		
-		if(GameMechanics.chooseComputerTurn() != -1) {
-		GameMechanics.getCoordinates(GameMechanics.chooseComputerTurn());
-		GameMechanics.gameBoard[GameMechanics.chooseComputerTurn()] = "O";
+		int cellChosen = GameMechanics.chooseComputerTurn();
+		GameMechanics.getCoordinates(cellChosen);
+		GameMechanics.gameBoard[cellChosen] = "O";
 		GameMechanics.drawOval(GameMechanics.X, GameMechanics.Y);
-		TicTacToe.userTurn = true;
-		}
+		
+		
+		
 		
 	}
 	

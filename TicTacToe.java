@@ -99,28 +99,33 @@ class TicTacToe extends JFrame implements MouseListener, ItemListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-	if(difficultySelected == true) {	
-		if(userTurn == true) {
+	
+		if(difficultySelected == true && userTurn == true && GameMechanics.returnCell(e.getX(), e.getY()) != -1 && !(GameMechanics.gameBoard[GameMechanics.returnCell(e.getX(), e.getY())].equalsIgnoreCase("O"))) {
+		
+		
 			
-			if(GameMechanics.returnCell(e.getX(), e.getY()) != -1) {
+			
+				
+					
 			
 				GameMechanics.getCoordinates(GameMechanics.returnCell(e.getX(), e.getY()));
 				GameMechanics.gameBoard[GameMechanics.returnCell(e.getX(), e.getY())] = "X";
 				GameMechanics.drawX(GameMechanics.X, GameMechanics.Y);
 				userTurn = false;
 				try {
-					Thread.sleep(1200);
+					Thread.sleep(500);
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				GameMechanics.computerTurn();
-			}
-		
+				userTurn = true;
 			}
 		
 		}
-	}
+		
+		
+	
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
