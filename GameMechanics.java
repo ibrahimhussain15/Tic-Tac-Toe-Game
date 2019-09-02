@@ -168,6 +168,9 @@ public class GameMechanics {
 		GameMechanics.getCoordinates(cellChosen);
 		GameMechanics.gameBoard[cellChosen] = "O";
 		GameMechanics.drawOval(GameMechanics.X, GameMechanics.Y);
+		if(checkForWinner().equalsIgnoreCase("User") || checkForWinner().equalsIgnoreCase("Computer") )
+			declareWinner(checkForWinner());
+			TicTacToe.userTurn = false;
 		
 		
 		
@@ -176,37 +179,37 @@ public class GameMechanics {
 	
     public static String checkForWinner() {
         for (int a = 0; a < 8; a++) {
-            String line = null;
+            String combo = "";
             switch (a) {
                 case 0:
-                    line = gameBoard[0] + gameBoard[1] + gameBoard[2];
+                    combo = gameBoard[0] + gameBoard[1] + gameBoard[2];
                     break;
                 case 1:
-                    line = gameBoard[3] + gameBoard[4] + gameBoard[5];
+                	combo = gameBoard[3] + gameBoard[4] + gameBoard[5];
                     break;
                 case 2:
-                    line = gameBoard[6] + gameBoard[7] + gameBoard[8];
+                	combo = gameBoard[6] + gameBoard[7] + gameBoard[8];
                     break;
                 case 3:
-                    line = gameBoard[0] + gameBoard[3] + gameBoard[6];
+                	combo = gameBoard[0] + gameBoard[3] + gameBoard[6];
                     break;
                 case 4:
-                    line = gameBoard[1] + gameBoard[4] + gameBoard[7];
+                	combo = gameBoard[1] + gameBoard[4] + gameBoard[7];
                     break;
                 case 5:
-                    line = gameBoard[2] + gameBoard[5] + gameBoard[8];
+                	combo = gameBoard[2] + gameBoard[5] + gameBoard[8];
                     break;
                 case 6:
-                    line = gameBoard[0] + gameBoard[4] + gameBoard[8];
+                	combo = gameBoard[0] + gameBoard[4] + gameBoard[8];
                     break;
                 case 7:
-                    line = gameBoard[2] + gameBoard[4] + gameBoard[6];
+                	combo = gameBoard[2] + gameBoard[4] + gameBoard[6];
                     break;
             }
-            if (line.equals("XXX")) {
-                return "X";
-            } else if (line.equals("OOO")) {
-                return "O";
+            if (combo.equals("XXX")) {
+                return "User";
+            } else if (combo.equals("OOO")) {
+                return "Computer";
             }
         }
         
@@ -220,11 +223,11 @@ public class GameMechanics {
         g.setColor(Color.BLACK);
         Font font = new Font("Verdana", Font.BOLD, 20);
         g.setFont(font);
-    	if(s.equalsIgnoreCase("X")) {
+    	if(s.equalsIgnoreCase("User")) {
     		winner = "You Win!";
     		g.drawString(winner, 100, 600);
     	}
-    	if(s.equalsIgnoreCase("O")) {
+    	if(s.equalsIgnoreCase("Computer")) {
     		winner = "You Lose, Computer Wins.";
     		g.drawString(winner, 100, 600);
     	}
