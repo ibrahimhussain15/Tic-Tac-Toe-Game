@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 public class GameMechanics {
 	
 	public static String winner;
+	
+	public static boolean reset = false;
 
 	public static int X;
 	public static int Y;
@@ -164,13 +166,20 @@ public class GameMechanics {
 	
 	public static void computerTurn() {
 		
+		if(checkForWinner().equalsIgnoreCase("User") || checkForWinner().equalsIgnoreCase("Computer") ) {
+			declareWinner(checkForWinner());
+			return;
+		}
+		
 		int cellChosen = GameMechanics.chooseComputerTurn();
 		GameMechanics.getCoordinates(cellChosen);
 		GameMechanics.gameBoard[cellChosen] = "O";
 		GameMechanics.drawOval(GameMechanics.X, GameMechanics.Y);
-		if(checkForWinner().equalsIgnoreCase("User") || checkForWinner().equalsIgnoreCase("Computer") )
+		if(checkForWinner().equalsIgnoreCase("User") || checkForWinner().equalsIgnoreCase("Computer") ) {
 			declareWinner(checkForWinner());
-			TicTacToe.userTurn = false;
+			return;
+		}
+		TicTacToe.userTurn = false;
 		
 		
 		
@@ -212,6 +221,25 @@ public class GameMechanics {
                 return "Computer";
             }
         }
+        String checkDraw = "";
+        
+        for (int a = 0; a < 8; a++) {
+        	
+        	if(gameBoard[a].equalsIgnoreCase("X") || gameBoard[a].equalsIgnoreCase("O"))
+        		checkDraw += gameBoard[a];
+        	else {
+        		break;
+        	}
+        	if(a == 7)
+        		return "draw";
+        	
+        	
+        	
+        }
+        
+        
+      
+        
         
         return "none";
     }
@@ -229,6 +257,10 @@ public class GameMechanics {
     	}
     	if(s.equalsIgnoreCase("Computer")) {
     		winner = "You Lose, Computer Wins.";
+    		g.drawString(winner, 100, 600);
+    	}
+    	if(s.equalsIgnoreCase("draw")) {
+    		winner = "Draw!";
     		g.drawString(winner, 100, 600);
     	}
     }
