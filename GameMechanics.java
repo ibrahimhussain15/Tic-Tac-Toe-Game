@@ -10,27 +10,31 @@ import javax.swing.JLabel;
 
 public class GameMechanics {
 	
+	
+	//String that displays who won the game
 	public static String winner;
 	
 	public static boolean reset = false;
 
+	//coordinates
 	public static int X;
 	public static int Y;
 	
 	public static String difficulty;
 	public static String[] gameBoard = {"0", "1", "2", "3", "4", "5", "6", "7", "8"};
 	
+	//declare cells of Tic Tac Toe
+	public static Rectangle cell0 = new Rectangle(100, 200, 100, 100);
+	public static Rectangle cell1 = new Rectangle(200, 200, 100, 100);
+	public static Rectangle cell2 = new Rectangle(300, 200, 100, 100);
+	public static Rectangle cell3 = new Rectangle(100, 300, 100, 100);
+	public static Rectangle cell4 = new Rectangle(200, 300, 100, 100);
+	public static Rectangle cell5 = new Rectangle(300, 300, 100, 100);
+	public static Rectangle cell6 = new Rectangle(100, 400, 100, 100);
+	public static Rectangle cell7 = new Rectangle(200, 400, 100, 100);
+	public static Rectangle cell8 = new Rectangle(300, 400, 100, 100);
 	
-	public static Rectangle cell0 = new Rectangle(100, 200, 100 , 100);
-	public static Rectangle cell1 = new Rectangle(200, 200, 100 , 100);
-	public static Rectangle cell2 = new Rectangle(300, 200, 100 , 100);
-	public static Rectangle cell3 = new Rectangle(100, 300, 100 , 100);
-	public static Rectangle cell4 = new Rectangle(200, 300, 100 , 100);
-	public static Rectangle cell5 = new Rectangle(300, 300, 100 , 100);
-	public static Rectangle cell6 = new Rectangle(100, 400, 100 , 100);
-	public static Rectangle cell7 = new Rectangle(200, 400, 100 , 100);
-	public static Rectangle cell8 = new Rectangle(300, 400, 100 , 100);
-	
+	//function that takes in coordinates of mouse press and returns corresponding cell
 	public static int returnCell(int x, int y) {
 		if(cell0.contains(x,y))
 			return 0;
@@ -55,6 +59,7 @@ public class GameMechanics {
 		
 	}
 	
+	//takes in cell number and assigns coordinates to X and Y points for where to draw X's and O's
 	public static void getCoordinates(int n) {
 		switch (n) {
 		case 0: 
@@ -100,10 +105,11 @@ public class GameMechanics {
 		
 	}
 	
-	public static void drawOval(int x, int y) {
+	//Draws O using Graphics object
+	public static void drawOval(int x, int y, Color color) {
 		Graphics g = TicTacToe.panel.getGraphics(); 
 		  
-        g.setColor(Color.red); 
+        g.setColor(color); 
   
         
         g.fillOval(x, y, 50, 50);
@@ -111,15 +117,16 @@ public class GameMechanics {
         gameBoard[returnCell(X,Y)] = "O";
         for(int i =0; i < gameBoard.length; i++)
         System.out.print(gameBoard[i] + " ");
-        System.out.println();
+		
 	
 	}
 	
-	public static void drawX (int x, int y) {
+	//Draws X using Graphics object
+	public static void drawX (int x, int y, Color color) {
 	
 		Graphics g = (Graphics2D)TicTacToe.panel.getGraphics(); 
 		  
-        g.setColor(Color.red); 
+        g.setColor(color); 
         ((Graphics2D) g).setStroke(new BasicStroke(5));
         
         
@@ -127,9 +134,10 @@ public class GameMechanics {
         g.drawLine(x + 50, y, x, y + 50);
         for(int i =0; i < gameBoard.length; i++)
             System.out.print(gameBoard[i] + " ");
-		System.out.println();
+        
 	}
 	
+	//CPU picks a spot to draw O, depending on difficulty selected
 	public static int chooseComputerTurn() {
 		if(difficulty.equals("easy")) {
 			
@@ -143,42 +151,78 @@ public class GameMechanics {
 		}
 		else if(difficulty.equals("medium")) {
 
-			Random r = new Random();
-			int result = r.nextInt(9);
-			while(gameBoard[result].equalsIgnoreCase("X") || gameBoard[result].equalsIgnoreCase("O")  ) {
-			result =  r.nextInt(9);
-			continue;
+			if( !(gameBoard[4].equalsIgnoreCase("X")) && !(gameBoard[4].equalsIgnoreCase("O")) ) {
+				return 4;
 			}
-			return result;
+			else if(!(gameBoard[8].equalsIgnoreCase("X")) && !(gameBoard[8].equalsIgnoreCase("O"))) {
+				
+				return 8;
+				
+			}
+			else if(!(gameBoard[0].equalsIgnoreCase("X")) && !(gameBoard[0].equalsIgnoreCase("O"))) {
+				
+				return 0;
+				
+			}
+			else if(!(gameBoard[2].equalsIgnoreCase("X")) && !(gameBoard[2].equalsIgnoreCase("O"))) {
+				
+				return 2;
+				
+			}
+			else if(!(gameBoard[6].equalsIgnoreCase("X")) && !(gameBoard[6].equalsIgnoreCase("O"))) {
+				
+				return 6;
+				
+			}
+			
+			else {
+
+				Random r = new Random();
+				int result = r.nextInt(9);
+				while(gameBoard[result].equalsIgnoreCase("X") || gameBoard[result].equalsIgnoreCase("O")  ) {
+				result =  r.nextInt(9);
+				continue;
+				}
+				return result;	
+			
+			}
 		}
 		else {
-
-			Random r = new Random();
-			int result = r.nextInt(9);
-			while(gameBoard[result].equalsIgnoreCase("X") || gameBoard[result].equalsIgnoreCase("O") ) {
-			result =  r.nextInt(9);
-			continue;
-			}
-			return result;
+			String [][]b = {{GameMechanics.gameBoard[0],GameMechanics.gameBoard[1],GameMechanics.gameBoard[2]},{GameMechanics.gameBoard[3],GameMechanics.gameBoard[4],GameMechanics.gameBoard[5]},{GameMechanics.gameBoard[6],GameMechanics.gameBoard[7],GameMechanics.gameBoard[8]}};
+			System.out.println("\nCol: " + MinMax.findBestMove(b).col + "\tRow: " + MinMax.findBestMove(b).row);
+			return MinMax.convertMoveToInt(MinMax.findBestMove(b));
+			
+			
+			
+			
+			
+			
 		}
 	
 	}
 	
+	
+    // Draws O on cell chosen by chooseComputerTurn() method
+	// Checks if winner has been determined
+	// sets userTurn to false
 	public static void computerTurn() {
 		
-		if(checkForWinner().equalsIgnoreCase("User") || checkForWinner().equalsIgnoreCase("Computer") ) {
-			declareWinner(checkForWinner());
+		if(checkForWinner().equalsIgnoreCase("User") || checkForWinner().equalsIgnoreCase("Computer")|| checkForWinner().equalsIgnoreCase("draw") ) {
+			declareWinner(checkForWinner(), Color.black);
+			TicTacToe.panel.add(TicTacToe.reset);
 			return;
 		}
 		
 		int cellChosen = GameMechanics.chooseComputerTurn();
 		GameMechanics.getCoordinates(cellChosen);
 		GameMechanics.gameBoard[cellChosen] = "O";
-		GameMechanics.drawOval(GameMechanics.X, GameMechanics.Y);
-		if(checkForWinner().equalsIgnoreCase("User") || checkForWinner().equalsIgnoreCase("Computer") ) {
-			declareWinner(checkForWinner());
+		GameMechanics.drawOval(GameMechanics.X, GameMechanics.Y, Color.red);
+		if(checkForWinner().equalsIgnoreCase("User") || checkForWinner().equalsIgnoreCase("Computer")|| checkForWinner().equalsIgnoreCase("draw") ) {
+			declareWinner(checkForWinner(), Color.black);
+			TicTacToe.panel.add(TicTacToe.reset);
 			return;
 		}
+		
 		TicTacToe.userTurn = false;
 		
 		
@@ -244,11 +288,11 @@ public class GameMechanics {
         return "none";
     }
     
-    public static void declareWinner(String s) {
+    public static void declareWinner(String s, Color color) {
     	
     	Graphics g = TicTacToe.panel.getGraphics(); 
 		  
-        g.setColor(Color.BLACK);
+        g.setColor(color);
         Font font = new Font("Verdana", Font.BOLD, 20);
         g.setFont(font);
     	if(s.equalsIgnoreCase("User")) {
@@ -264,6 +308,30 @@ public class GameMechanics {
     		g.drawString(winner, 100, 600);
     	}
     }
+
+	public static void clearBoard() {
+		
+		//clear all X's and O's
+		
+		Graphics g = TicTacToe.panel.getGraphics();
+		
+		declareWinner(checkForWinner(), Color.gray);
+		
+		for(int i = 0; i < gameBoard.length; i++) {
+			
+			getCoordinates(i);
+			if(gameBoard[i].equalsIgnoreCase("x")) 
+				drawX(GameMechanics.X, GameMechanics.Y, Color.gray);
+			if(gameBoard[i].equalsIgnoreCase("o"))
+				drawOval(GameMechanics.X, GameMechanics.Y, Color.gray);
+			gameBoard[i]= String.valueOf(i);
+			
+		}
+		TicTacToe.panel.remove(TicTacToe.reset);
+		
+		
+	}
+    
 
 	
 	

@@ -6,7 +6,9 @@ import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
   
-class TicTacToe extends JFrame implements MouseListener, ItemListener {
+class TicTacToe extends JFrame implements MouseListener, ItemListener, ActionListener {
+	
+	//declare elements to be added to Frame
 	public static JPanel panel;
 	public Graphics g2;
 	public JRadioButton easy;
@@ -16,8 +18,12 @@ class TicTacToe extends JFrame implements MouseListener, ItemListener {
 	public static boolean userTurn = true;
 	public static boolean difficultySelected = false;
 	public static JLabel thenPlay;
+	public boolean resetable = false;
+	public static Button reset;
 	
 	public TicTacToe() {
+		
+		//set title of app
 		super("Tic Tac Toe");
 		
 		 panel = new JPanel() {
@@ -29,9 +35,12 @@ class TicTacToe extends JFrame implements MouseListener, ItemListener {
 				Font title = new Font("TimesRoman", Font.BOLD, 15);
 				g.setFont(title);
 				g.setColor(Color.black);
+				
+				//prompt user to select difficulty
 				g.drawString("Welcome to Tic Tac Toe! To start, select a difficulty below: ", 10, 30);
 				g2 = (Graphics2D) g;
 				
+				//draw Tic Tac Toe Board
 				g2.setColor(Color.BLACK);
 				((Graphics2D) g2).setStroke(new BasicStroke(8));
 				g2.drawLine(200, 200, 200, 500);
@@ -51,11 +60,13 @@ class TicTacToe extends JFrame implements MouseListener, ItemListener {
 		
 		
 		
-		Button reset = new Button("Play Again");
+		reset = new Button("Play Again");
 		
-		reset.setBounds(100, 600, 100, 20);
+		
+		reset.setBounds(100, 625, 200, 30);
 		reset.setFont(new Font("Verdana", Font.BOLD, 10));
 		reset.setBackground(Color.gray);
+		reset.addActionListener(this);
 		
 		
 		
@@ -114,7 +125,8 @@ class TicTacToe extends JFrame implements MouseListener, ItemListener {
 	public void mousePressed(MouseEvent e) {
 		
 		if(GameMechanics.checkForWinner().equalsIgnoreCase("User") || GameMechanics.checkForWinner().equalsIgnoreCase("Computer") || GameMechanics.checkForWinner().equalsIgnoreCase("draw") ) {
-			GameMechanics.declareWinner(GameMechanics.checkForWinner());
+			GameMechanics.declareWinner(GameMechanics.checkForWinner(), Color.black);
+			panel.add(reset);
 			return;
 		}
 	
@@ -128,10 +140,12 @@ class TicTacToe extends JFrame implements MouseListener, ItemListener {
 			
 				GameMechanics.getCoordinates(GameMechanics.returnCell(e.getX(), e.getY()));
 				GameMechanics.gameBoard[GameMechanics.returnCell(e.getX(), e.getY())] = "X";
-				GameMechanics.drawX(GameMechanics.X, GameMechanics.Y);
+				GameMechanics.drawX(GameMechanics.X, GameMechanics.Y, Color.red);
+				
 				if(GameMechanics.checkForWinner().equalsIgnoreCase("User") || GameMechanics.checkForWinner().equalsIgnoreCase("Computer") || GameMechanics.checkForWinner().equalsIgnoreCase("draw")) {
-					GameMechanics.declareWinner(GameMechanics.checkForWinner());
+					GameMechanics.declareWinner(GameMechanics.checkForWinner(), Color.black);
 					userTurn = false;
+					panel.add(reset);
 					return;
 				}
 				userTurn = false;
@@ -168,7 +182,7 @@ class TicTacToe extends JFrame implements MouseListener, ItemListener {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -208,8 +222,6 @@ class TicTacToe extends JFrame implements MouseListener, ItemListener {
 	        	
 	        	GameMechanics.difficulty = "hard";
 	        	
-	        	
-	        	
 	        }
 	    }
 	    }
@@ -219,20 +231,16 @@ class TicTacToe extends JFrame implements MouseListener, ItemListener {
 	    }
 	    
 	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		GameMechanics.clearBoard();
+		userTurn = true;
+		
+	}
 	}
 	
-//	public String getSelectedButtonText(ButtonGroup buttonGroup) {
-//        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
-//            AbstractButton button = buttons.nextElement();
-//
-//            if (button.isSelected()) {
-//                return button.getText();
-//            }
-//        }
-//
-//        return null;
-//    }
-	
+
 	
 
   
