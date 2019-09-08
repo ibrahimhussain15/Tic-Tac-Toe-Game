@@ -2,40 +2,38 @@
 public class MinMax {
 
 
-	  
+	 //class of object that contains two values, one for row and one for column
 	static class Move { 
-	     int row, col; 
+	     int row, column; 
 	}
 	
-	//convert col and row values into a single cell within gameboard
+	//convert col and row values into a single cell within gameboard array
 	  
 	public static int convertMoveToInt(Move m) {
-		if(m.row == 0 && m.col == 0)
+		if(m.row == 0 && m.column == 0)
 			return 0;
-		if(m.row == 0 && m.col == 1)
+		if(m.row == 0 && m.column == 1)
 			return 1;
-		if(m.row == 0 && m.col == 2)
+		if(m.row == 0 && m.column == 2)
 			return 2;
-		if(m.row == 1 && m.col == 0)
+		if(m.row == 1 && m.column == 0)
 			return 3;
-		if(m.row == 1 && m.col == 1)
+		if(m.row == 1 && m.column == 1)
 			return 4;
-		if(m.row == 1 && m.col == 2)
+		if(m.row == 1 && m.column == 2)
 			return 5;
-		if(m.row == 2 && m.col == 0)
+		if(m.row == 2 && m.column == 0)
 			return 6;
-		if(m.row == 2 && m.col == 1)
+		if(m.row == 2 && m.column == 1)
 			return 7;
-		if(m.row == 2 && m.col == 2)
+		if(m.row == 2 && m.column == 2)
 			return 8;
 		
 		return 0;
 	}
 	  
-	// This function returns true if there are moves 
-	// remaining on the board. It returns false if 
-	// there are no moves left to play. 
-	public static boolean isMovesLeft(String[][] b) { 
+	// returns true if there are moves remaining on the board. returns false if no moves left to play. 
+	public static boolean movesLeft(String[][] b) { 
 	    
 			
 			
@@ -56,7 +54,7 @@ public class MinMax {
 	
 	public static int evaluate(String[][] b) { 
 	    
-		// Checking for Rows for X or O victory.
+		// check rows for victory
 		
 	    for (int row = 0; row < 3; row++) 
 	    { 
@@ -70,7 +68,7 @@ public class MinMax {
 	        } 
 	    } 
 	  
-	    // Checking for Columns for X or O victory. 
+	    // check columns for victory
 	    for (int col = 0; col<3; col++) 
 	    { 
 	        if ((b[0][col].equalsIgnoreCase(b[1][col])) && 
@@ -84,7 +82,7 @@ public class MinMax {
 	        } 
 	    } 
 	  
-	    // Checking for Diagonals for X or O victory. 
+	    // check diagonals. 
 	    if ((b[0][0].equalsIgnoreCase(b[1][1])) && (b[1][1].equalsIgnoreCase(b[2][2]))) 
 	    { 
 	        if (b[0][0].equalsIgnoreCase("x")) 
@@ -105,10 +103,8 @@ public class MinMax {
 	    return 0; 
 	} 
 	  
-	// This is the minimax function. It considers all 
-	// the possible ways the game can go and returns 
-	// the value of the board 
-	static int minimax(String board[][], int depth, boolean isMax) { 
+	//minimax function, returns value of board after examining all possible outcomes
+	static int minimax(String board[][], int depth, boolean isMaximum) { 
 	    
 		
 		int score = evaluate(board); 
@@ -125,11 +121,11 @@ public class MinMax {
 	  
 	    // If there are no more moves and no winner then 
 	    // it is a tie 
-	    if (isMovesLeft(board)==false) 
+	    if (movesLeft(board)==false) 
 	        return 0; 
 	  
-	    // If this maximizer's move 
-	    if (isMax) 
+	    // If maximizer's move 
+	    if (isMaximum) 
 	    { 
 	        int best = -1000000; 
 	  
@@ -146,7 +142,7 @@ public class MinMax {
 	  
 	                    // Call minimax recursively and choose 
 	                    // the maximum value 
-	                    best = Math.max( best, minimax(board, depth + 1, !isMax) ); 
+	                    best = Math.max( best, minimax(board, depth + 1, !isMaximum) ); 
 	  
 	                    // Undo the move 
 	                    board[i][j] = "4"; 
@@ -156,7 +152,7 @@ public class MinMax {
 	        return best; 
 	    } 
 	  
-	    // If this minimizer's move 
+	    // If minimizer's move 
 	    else
 	    { 
 	        int best = 1000000; 
@@ -175,9 +171,9 @@ public class MinMax {
 	                    // Call minimax recursively and choose 
 	                    // the minimum value 
 	                    best = Math.min(best, 
-	                           minimax(board, depth+1, !isMax)); 
+	                           minimax(board, depth+1, !isMaximum)); 
 	  
-	                    // Undo the move 
+	                    // Undo move 
 	                    board[i][j] = "4"; 
 	                } 
 	            } 
@@ -191,7 +187,7 @@ public class MinMax {
 	    int bestVal = -1000; 
 	    Move bestMove = new Move(); 
 	    bestMove.row = -1; 
-	    bestMove.col = -1; 
+	    bestMove.column = -1; 
 	  
 	    // Traverse all cells, evaluate minimax function for 
 	    // all empty cells. And return the cell with optimal 
@@ -217,7 +213,7 @@ public class MinMax {
 	                // best 
 	                if (moveVal > bestVal) { 
 	                    bestMove.row = i; 
-	                    bestMove.col = j; 
+	                    bestMove.column = j; 
 	                    bestVal = moveVal; 
 	                } 
 	            } 
@@ -226,13 +222,6 @@ public class MinMax {
 	  
 	   
 	    return bestMove; 
-	 
-	  
-	
-	
-	   
-	    
-	  
 	   
 	    
 	} 

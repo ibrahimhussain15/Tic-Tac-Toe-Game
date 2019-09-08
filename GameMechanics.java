@@ -20,7 +20,10 @@ public class GameMechanics {
 	public static int X;
 	public static int Y;
 	
+	//stores difficulty level selected by user
 	public static String difficulty;
+	
+	//create game board to store values of each cell
 	public static String[] gameBoard = {"0", "1", "2", "3", "4", "5", "6", "7", "8"};
 	
 	//declare cells of Tic Tac Toe
@@ -115,6 +118,8 @@ public class GameMechanics {
         g.fillOval(x, y, 50, 50);
         
         gameBoard[returnCell(X,Y)] = "O";
+        
+        //print to console to ensure that game board array accurately reflects GUI
         for(int i =0; i < gameBoard.length; i++)
         System.out.print(gameBoard[i] + " ");
 		
@@ -132,6 +137,8 @@ public class GameMechanics {
         
         g.drawLine(x, y, x + 50, y + 50);
         g.drawLine(x + 50, y, x, y + 50);
+        
+        //print to console to ensure game board array accurately reflects GUI
         for(int i =0; i < gameBoard.length; i++)
             System.out.print(gameBoard[i] + " ");
         
@@ -139,6 +146,8 @@ public class GameMechanics {
 	
 	//CPU picks a spot to draw O, depending on difficulty selected
 	public static int chooseComputerTurn() {
+		
+		//easy mode - choose any random spot to place O
 		if(difficulty.equals("easy")) {
 			
 			Random r = new Random();
@@ -149,6 +158,8 @@ public class GameMechanics {
 			}
 			return result;
 		}
+		
+		//medium mode - somewhat calculated approach, not 100% fool proof
 		else if(difficulty.equals("medium")) {
 
 			if( !(gameBoard[4].equalsIgnoreCase("X")) && !(gameBoard[4].equalsIgnoreCase("O")) ) {
@@ -187,10 +198,14 @@ public class GameMechanics {
 			
 			}
 		}
+		
+		//hard mode - use MinMax algorithm to determine best move 
 		else {
 			String [][]b = {{GameMechanics.gameBoard[0],GameMechanics.gameBoard[1],GameMechanics.gameBoard[2]},{GameMechanics.gameBoard[3],GameMechanics.gameBoard[4],GameMechanics.gameBoard[5]},{GameMechanics.gameBoard[6],GameMechanics.gameBoard[7],GameMechanics.gameBoard[8]}};
-			System.out.println("\nCol: " + MinMax.findBestMove(b).col + "\tRow: " + MinMax.findBestMove(b).row);
-			return MinMax.convertMoveToInt(MinMax.findBestMove(b));
+			System.out.println("\nCol: " + MinMax.findBestMove(b).column + "\tRow: " + MinMax.findBestMove(b).row);
+			int moveToMake = MinMax.convertMoveToInt(MinMax.findBestMove(b));
+			
+			return moveToMake;
 			
 			
 			
@@ -207,21 +222,38 @@ public class GameMechanics {
 	// sets userTurn to false
 	public static void computerTurn() {
 		
+		
+		//check winner and display "play again" button if game is over
 		if(checkForWinner().equalsIgnoreCase("User") || checkForWinner().equalsIgnoreCase("Computer")|| checkForWinner().equalsIgnoreCase("draw") ) {
 			declareWinner(checkForWinner(), Color.black);
 			TicTacToe.panel.add(TicTacToe.reset);
 			return;
 		}
 		
+		//invoke chooseComputerTurn() to select next move
 		int cellChosen = GameMechanics.chooseComputerTurn();
+		
+		//get coordinates of cell chosen by chooseComputerTurn()
 		GameMechanics.getCoordinates(cellChosen);
+		
+		//replace array index with O
 		GameMechanics.gameBoard[cellChosen] = "O";
+		
+		//draw an O in the GUI Game Board
 		GameMechanics.drawOval(GameMechanics.X, GameMechanics.Y, Color.red);
+		
+		//2D array representation of game board (for use in MinMax algorithm)
+		String [][]b = {{GameMechanics.gameBoard[0],GameMechanics.gameBoard[1],GameMechanics.gameBoard[2]},{GameMechanics.gameBoard[3],GameMechanics.gameBoard[4],GameMechanics.gameBoard[5]},{GameMechanics.gameBoard[6],GameMechanics.gameBoard[7],GameMechanics.gameBoard[8]}};
+		MinMax.convertMoveToInt(MinMax.findBestMove(b));
+		
+		//check if game is over, if so display winner 
 		if(checkForWinner().equalsIgnoreCase("User") || checkForWinner().equalsIgnoreCase("Computer")|| checkForWinner().equalsIgnoreCase("draw") ) {
 			declareWinner(checkForWinner(), Color.black);
 			TicTacToe.panel.add(TicTacToe.reset);
 			return;
 		}
+		
+		//set userTurn to false
 		
 		TicTacToe.userTurn = false;
 		
@@ -230,6 +262,7 @@ public class GameMechanics {
 		
 	}
 	
+	//the following function analyzez game board array and checks if the game has been won by either side
     public static String checkForWinner() {
         for (int a = 0; a < 8; a++) {
             String combo = "";
@@ -267,6 +300,7 @@ public class GameMechanics {
         }
         String checkDraw = "";
         
+        //checks if it was a draw
         for (int a = 0; a < 8; a++) {
         	
         	if(gameBoard[a].equalsIgnoreCase("X") || gameBoard[a].equalsIgnoreCase("O"))
@@ -284,10 +318,11 @@ public class GameMechanics {
         
       
         
-        
+        //otherwise, return none to indicate game is not over
         return "none";
     }
     
+    //following function takes in result of checkForWinner() and displays a string to the GUI that declares outcome of match
     public static void declareWinner(String s, Color color) {
     	
     	Graphics g = TicTacToe.panel.getGraphics(); 
@@ -309,6 +344,7 @@ public class GameMechanics {
     	}
     }
 
+    //clears the board of all X's and O's so that user can play again
 	public static void clearBoard() {
 		
 		//clear all X's and O's
