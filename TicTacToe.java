@@ -125,14 +125,21 @@ class TicTacToe extends JFrame implements MouseListener, ItemListener, ActionLis
 		
 		
 		//check if game is over. if it is, display "Play Again" button at bottom of screen.
-		if(GameMechanics.checkForWinner().equalsIgnoreCase("User") || GameMechanics.checkForWinner().equalsIgnoreCase("Computer") || GameMechanics.checkForWinner().equalsIgnoreCase("draw") ) {
+		if(GameMechanics.checkForWinner().equalsIgnoreCase("User")
+				|| GameMechanics.checkForWinner().equalsIgnoreCase("Computer")
+				|| GameMechanics.checkForWinner().equalsIgnoreCase("draw") ) {
 			GameMechanics.declareWinner(GameMechanics.checkForWinner(), Color.black);
 			panel.add(reset);
 			return;
 		}
 	
-		//check all of the following: difficulty has been selected, it is the user's turn, and the mouse was clicked within one of the open cells
-		if(difficultySelected == true && userTurn == true && GameMechanics.returnCell(e.getX(), e.getY()) != -1 && !(GameMechanics.gameBoard[GameMechanics.returnCell(e.getX(), e.getY())].equalsIgnoreCase("O"))) {
+		//check all of the following: difficulty has been selected, it is the user's turn,
+		// and the mouse was clicked within one of the open cells
+		if(difficultySelected
+				&& userTurn
+				&& GameMechanics.returnCell(e.getX(), e.getY()) != -1
+				&& !(GameMechanics.gameBoard[GameMechanics.returnCell(e.getX(), e.getY())]
+				.equalsIgnoreCase("O"))) {
 		
 		
 				//get coordinates of mouse click, replace array index with "X", and draw an X on appropriate cell
@@ -141,7 +148,9 @@ class TicTacToe extends JFrame implements MouseListener, ItemListener, ActionLis
 				GameMechanics.drawX(GameMechanics.X, GameMechanics.Y, Color.red);
 				
 				//check if game is over, if so, display winner and "Play Again" button
-				if(GameMechanics.checkForWinner().equalsIgnoreCase("User") || GameMechanics.checkForWinner().equalsIgnoreCase("Computer") || GameMechanics.checkForWinner().equalsIgnoreCase("draw")) {
+				if(GameMechanics.checkForWinner().equalsIgnoreCase("User")
+						|| GameMechanics.checkForWinner().equalsIgnoreCase("Computer")
+						|| GameMechanics.checkForWinner().equalsIgnoreCase("draw")) {
 					GameMechanics.declareWinner(GameMechanics.checkForWinner(), Color.black);
 					userTurn = false;
 					panel.add(reset);
@@ -178,28 +187,26 @@ class TicTacToe extends JFrame implements MouseListener, ItemListener, ActionLis
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-
 		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		
-		//if one of the radio buttons is selected, set difficultySelected to true so that game can begin. set difficulty to whichever difficulty was picked.
+		//if one of the radio buttons is selected, set difficultySelected to true so that game can begin.
+		//set difficulty to whichever difficulty was picked.
 	    if (e.getStateChange() == ItemEvent.SELECTED) {
 	    	
-	       if(difficultySelected == false) {
+	       if(!difficultySelected) {
 	    	   
 	    	   Graphics g = this.getGraphics();
 	    	   g.setFont(new Font("TimesRoman", Font.BOLD, 15));

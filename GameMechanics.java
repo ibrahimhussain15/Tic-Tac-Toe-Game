@@ -152,7 +152,8 @@ public class GameMechanics {
 			
 			Random r = new Random();
 			int result = r.nextInt(9);
-			while(gameBoard[result].equalsIgnoreCase("X") || gameBoard[result].equalsIgnoreCase("O")  ) {
+			while(gameBoard[result].equalsIgnoreCase("X")
+					|| gameBoard[result].equalsIgnoreCase("O")  ) {
 			result =  r.nextInt(9);
 			continue;
 			}
@@ -162,25 +163,30 @@ public class GameMechanics {
 		//medium mode - somewhat calculated approach, not 100% fool proof
 		else if(difficulty.equals("medium")) {
 
-			if( !(gameBoard[4].equalsIgnoreCase("X")) && !(gameBoard[4].equalsIgnoreCase("O")) ) {
+			if( !(gameBoard[4].equalsIgnoreCase("X"))
+					&& !(gameBoard[4].equalsIgnoreCase("O")) ) {
 				return 4;
 			}
-			else if(!(gameBoard[8].equalsIgnoreCase("X")) && !(gameBoard[8].equalsIgnoreCase("O"))) {
+			else if(!(gameBoard[8].equalsIgnoreCase("X"))
+					&& !(gameBoard[8].equalsIgnoreCase("O"))) {
 				
 				return 8;
 				
 			}
-			else if(!(gameBoard[0].equalsIgnoreCase("X")) && !(gameBoard[0].equalsIgnoreCase("O"))) {
+			else if(!(gameBoard[0].equalsIgnoreCase("X"))
+					&& !(gameBoard[0].equalsIgnoreCase("O"))) {
 				
 				return 0;
 				
 			}
-			else if(!(gameBoard[2].equalsIgnoreCase("X")) && !(gameBoard[2].equalsIgnoreCase("O"))) {
+			else if(!(gameBoard[2].equalsIgnoreCase("X"))
+					&& !(gameBoard[2].equalsIgnoreCase("O"))) {
 				
 				return 2;
 				
 			}
-			else if(!(gameBoard[6].equalsIgnoreCase("X")) && !(gameBoard[6].equalsIgnoreCase("O"))) {
+			else if(!(gameBoard[6].equalsIgnoreCase("X"))
+					&& !(gameBoard[6].equalsIgnoreCase("O"))) {
 				
 				return 6;
 				
@@ -190,7 +196,8 @@ public class GameMechanics {
 
 				Random r = new Random();
 				int result = r.nextInt(9);
-				while(gameBoard[result].equalsIgnoreCase("X") || gameBoard[result].equalsIgnoreCase("O")  ) {
+				while(gameBoard[result].equalsIgnoreCase("X")
+						|| gameBoard[result].equalsIgnoreCase("O")  ) {
 				result =  r.nextInt(9);
 				continue;
 				}
@@ -201,7 +208,9 @@ public class GameMechanics {
 		
 		//hard mode - use MinMax algorithm to determine best move 
 		else {
-			String [][]b = {{GameMechanics.gameBoard[0],GameMechanics.gameBoard[1],GameMechanics.gameBoard[2]},{GameMechanics.gameBoard[3],GameMechanics.gameBoard[4],GameMechanics.gameBoard[5]},{GameMechanics.gameBoard[6],GameMechanics.gameBoard[7],GameMechanics.gameBoard[8]}};
+			String [][]b = {{GameMechanics.gameBoard[0],GameMechanics.gameBoard[1],GameMechanics.gameBoard[2]},
+					{GameMechanics.gameBoard[3],GameMechanics.gameBoard[4],GameMechanics.gameBoard[5]},
+					{GameMechanics.gameBoard[6],GameMechanics.gameBoard[7],GameMechanics.gameBoard[8]}};
 			System.out.println("\nCol: " + MinMax.findBestMove(b).column + "\tRow: " + MinMax.findBestMove(b).row);
 			int moveToMake = MinMax.convertMoveToInt(MinMax.findBestMove(b));
 			
@@ -224,7 +233,9 @@ public class GameMechanics {
 		
 		
 		//check winner and display "play again" button if game is over
-		if(checkForWinner().equalsIgnoreCase("User") || checkForWinner().equalsIgnoreCase("Computer")|| checkForWinner().equalsIgnoreCase("draw") ) {
+		if(checkForWinner().equalsIgnoreCase("User")
+				|| checkForWinner().equalsIgnoreCase("Computer")
+				|| checkForWinner().equalsIgnoreCase("draw") ) {
 			declareWinner(checkForWinner(), Color.black);
 			TicTacToe.panel.add(TicTacToe.reset);
 			return;
@@ -243,11 +254,15 @@ public class GameMechanics {
 		GameMechanics.drawOval(GameMechanics.X, GameMechanics.Y, Color.red);
 		
 		//2D array representation of game board (for use in MinMax algorithm)
-		String [][]b = {{GameMechanics.gameBoard[0],GameMechanics.gameBoard[1],GameMechanics.gameBoard[2]},{GameMechanics.gameBoard[3],GameMechanics.gameBoard[4],GameMechanics.gameBoard[5]},{GameMechanics.gameBoard[6],GameMechanics.gameBoard[7],GameMechanics.gameBoard[8]}};
+		String [][]b = {{GameMechanics.gameBoard[0],GameMechanics.gameBoard[1],GameMechanics.gameBoard[2]},
+				{GameMechanics.gameBoard[3],GameMechanics.gameBoard[4],GameMechanics.gameBoard[5]},
+				{GameMechanics.gameBoard[6],GameMechanics.gameBoard[7],GameMechanics.gameBoard[8]}};
 		MinMax.convertMoveToInt(MinMax.findBestMove(b));
 		
 		//check if game is over, if so display winner 
-		if(checkForWinner().equalsIgnoreCase("User") || checkForWinner().equalsIgnoreCase("Computer")|| checkForWinner().equalsIgnoreCase("draw") ) {
+		if(checkForWinner().equalsIgnoreCase("User")
+				|| checkForWinner().equalsIgnoreCase("Computer")
+				|| checkForWinner().equalsIgnoreCase("draw") ) {
 			declareWinner(checkForWinner(), Color.black);
 			TicTacToe.panel.add(TicTacToe.reset);
 			return;
@@ -305,13 +320,10 @@ public class GameMechanics {
         	
         	if(gameBoard[a].equalsIgnoreCase("X") || gameBoard[a].equalsIgnoreCase("O"))
         		checkDraw += gameBoard[a];
-        	else {
+        	else
         		break;
-        	}
         	if(a == 7)
         		return "draw";
-        	
-        	
         	
         }
         
@@ -322,7 +334,8 @@ public class GameMechanics {
         return "none";
     }
     
-    //following function takes in result of checkForWinner() and displays a string to the GUI that declares outcome of match
+    //following function takes in result of checkForWinner()
+	// and displays a string to the GUI that declares outcome of match
     public static void declareWinner(String s, Color color) {
     	
     	Graphics g = TicTacToe.panel.getGraphics(); 
@@ -364,8 +377,6 @@ public class GameMechanics {
 			
 		}
 		TicTacToe.panel.remove(TicTacToe.reset);
-		
-		
 	}
     
 

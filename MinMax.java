@@ -121,7 +121,7 @@ public class MinMax {
 	  
 	    // If there are no more moves and no winner then 
 	    // it is a tie 
-	    if (movesLeft(board)==false) 
+	    if (!movesLeft(board))
 	        return 0; 
 	  
 	    // If maximizer's move 
@@ -135,7 +135,8 @@ public class MinMax {
 	            for (int j = 0; j<3; j++) 
 	            { 
 	                // Check if cell is empty 
-	                if (!(board[i][j].equalsIgnoreCase("X") || board[i][j].equalsIgnoreCase("O")))
+	                if (!(board[i][j].equalsIgnoreCase("X")
+                            || board[i][j].equalsIgnoreCase("O")))
 	                { 
 	                    // Make the move 
 	                    board[i][j] = "X"; 
@@ -163,7 +164,8 @@ public class MinMax {
 	            for (int j = 0; j<3; j++) 
 	            { 
 	                // Check if cell is empty 
-	                if (!(board[i][j].equalsIgnoreCase("X") || board[i][j].equalsIgnoreCase("O")))
+	                if (!(board[i][j].equalsIgnoreCase("X")
+                            || board[i][j].equalsIgnoreCase("O")))
 	                { 
 	                    // Make the move 
 	                    board[i][j] = "O"; 
@@ -197,7 +199,8 @@ public class MinMax {
 	        for (int j = 0; j < 3; j++) 
 	        { 
 	            // Check if cell is empty 
-	            if (!(board[i][j].equalsIgnoreCase("X") || board[i][j].equalsIgnoreCase("O"))) { 
+	            if (!(board[i][j].equalsIgnoreCase("X")
+                        || board[i][j].equalsIgnoreCase("O"))) {
 	                // Make the move 
 	                board[i][j] = "O"; 
 	  
@@ -218,12 +221,10 @@ public class MinMax {
 	                } 
 	            } 
 	        } 
-	    } 
-	  
+	    }
 	   
 	    return bestMove; 
-	   
-	    
+
 	} 
 	 
 	}
