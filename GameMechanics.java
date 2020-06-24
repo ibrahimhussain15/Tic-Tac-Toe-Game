@@ -215,12 +215,6 @@ public class GameMechanics {
 			int moveToMake = MinMax.convertMoveToInt(MinMax.findBestMove(b));
 			
 			return moveToMake;
-			
-			
-			
-			
-			
-			
 		}
 	
 	}
@@ -379,9 +373,6 @@ public class GameMechanics {
 		TicTacToe.panel.remove(TicTacToe.reset);
 	}
     
-
-	
-	
 
 
 }

@@ -47,9 +47,7 @@ class TicTacToe extends JFrame implements MouseListener, ItemListener, ActionLis
 				g2.drawLine(300, 200, 300, 500);
 				g2.drawLine(100, 300, 400, 300);
 				g2.drawLine(100, 400, 400, 400);
-				
-				
-				
+
 			}
 		};
 		
@@ -206,40 +204,35 @@ class TicTacToe extends JFrame implements MouseListener, ItemListener, ActionLis
 		//set difficulty to whichever difficulty was picked.
 	    if (e.getStateChange() == ItemEvent.SELECTED) {
 	    	
-	       if(!difficultySelected) {
-	    	   
-	    	   Graphics g = this.getGraphics();
-	    	   g.setFont(new Font("TimesRoman", Font.BOLD, 15));
-	    	   g.setColor(Color.black);
-	    	   g.drawString("Great! Now play your turn: ", 10, 150);
-	    	   
-	    	   difficultySelected = true;
-	    	   
-	    	if(easy.isSelected()) {
-	        	
-	    		GameMechanics.difficulty = "easy";
-	   
-	        	
-	        }
-	    	
-	        else if(medium.isSelected()) {
-	        	
-	        	GameMechanics.difficulty = "medium";
+			   if(!difficultySelected) {
 
-	        }
-	    	
-	        else {
-	        	
-	        	GameMechanics.difficulty = "hard";
-	        	
-	        }
+				   Graphics g = this.getGraphics();
+				   g.setFont(new Font("TimesRoman", Font.BOLD, 15));
+				   g.setColor(Color.black);
+				   g.drawString("Great! Now play your turn: ", 10, 150);
+
+				   difficultySelected = true;
+
+					if(easy.isSelected()) {
+
+						GameMechanics.difficulty = "easy";
+
+					}
+
+					else if(medium.isSelected()) {
+
+						GameMechanics.difficulty = "medium";
+
+					}
+
+					else {
+
+						GameMechanics.difficulty = "hard";
+
+					}
+	    	}
 	    }
-	    }
-	    
-	    else if (e.getStateChange() == ItemEvent.DESELECTED) {
-	        
-	    }
-	    
+
 	}
 
 	
@@ -248,7 +241,6 @@ class TicTacToe extends JFrame implements MouseListener, ItemListener, ActionLis
 	public void actionPerformed(ActionEvent e) {
 		GameMechanics.clearBoard();
 		userTurn = true;
-		
 	}
 	}
 	
